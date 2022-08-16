@@ -34,7 +34,7 @@
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "HYMusic",
+    "navigationBarTitleText": "音乐",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
