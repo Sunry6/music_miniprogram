@@ -1,0 +1,44 @@
+/* pages/detail-video/detail-video.wxss */
+page {
+  height: 100vh;
+}
+
+/* 下方滚动方案一 */
+/* .video {
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+} */
+
+/* 方案二 */
+.video {
+  width: 100%;
+}
+
+.content {
+  height: calc(100% - 225px);
+}
+
+.info {
+  padding: 26rpx;
+}
+
+.info .title {
+  font-weight: 700;
+}
+
+.info .desc,
+.info .other {
+  font-size: 24rpx;
+  margin-top: 10rpx;
+}
+
+.info .other {
+  display: flex;
+  justify-content: space-between;
+}
+
+.recommend {
+  padding: 30rpx;
+}

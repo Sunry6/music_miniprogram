@@ -23,7 +23,11 @@ Page({
     recMenuList: [],
     // 巅峰榜数据
     isRankingData: false,
-    rankingInfos: {}
+    rankingInfos: {},
+
+    // 当前正在播放的歌曲信息
+    currentSong: {},
+    isPlaying: false
   },
 
   onLoad() {
@@ -37,14 +41,9 @@ Page({
     rankingStore.onState("newRanking", this.handleNewRanking)
     rankingStore.onState("originRanking", this.handleOriginRanking)
     rankingStore.onState("upRanking", this.handleUpRanking)
-
-    // for (const key in rankingsMap) {
-    //   rankingStore.onState(key, this.getRankingHanlder(key))
-    // }
-    // rankingStore.onState("newRanking", this.getRankingHanlder("newRanking"))
-    // rankingStore.onState("originRanking", this.getRankingHanlder("originRanking"))
-    // rankingStore.onState("upRanking", this.getRankingHanlder("upRanking"))
     rankingStore.dispatch("fetchRankingDataAction")
+
+    playerStore.onStates(["currentSong", "isPlaying"], this.handlePlayInfos)
 
     // 获取屏幕的尺寸
     this.setData({ screenWidth: app.globalData.screenWidth })
@@ -84,6 +83,16 @@ Page({
     playerStore.setState("playSongIndex", index)
   },
 
+  onPlayOrPauseBtnTap() {
+    playerStore.dispatch("changeMusicStatusAction")
+  },
+
+  onPlayBarAlbumTap() {
+    wx.navigateTo({
+      url: '/pages/music-player/music-player',
+    })
+  },
+
 
   // ====================== 从Store中获取数据 ======================
   handleRecommendSongs(value) {
@@ -112,18 +121,22 @@ Page({
     const newRankingInfos = { ...this.data.rankingInfos, upRanking: value }
     this.setData({ rankingInfos: newRankingInfos })
   },
-  // getRankingHanlder(ranking) {
-  //   return value => {
-  //     const newRankingInfos = { ...this.data.rankingInfos, [ranking]: value }
-  //     this.setData({ rankingInfos: newRankingInfos })
-  //   }
-  // },
 
+  handlePlayInfos({ currentSong, isPlaying }) {
+    if (currentSong) {
+      this.setData({ currentSong })
+    }
+    if (isPlaying !== undefined) {
+      this.setData({ isPlaying })
+    }
+  },
 
   onUnload() {
     recommendStore.offState("recommendSongs", this.handleRecommendSongs)
     rankingStore.offState("newRanking", this.handleNewRanking)
     rankingStore.offState("originRanking", this.handleOriginRanking)
     rankingStore.offState("upRanking", this.handleUpRanking)
+    
+    playerStore.offStates(["currentSong", "isPlaying"], this.handlePlayInfos)
   }
 })
