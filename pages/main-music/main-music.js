@@ -65,7 +65,7 @@ Page({
 
   // 界面的事件监听方法
   onSearchClick() {
-    wx.navigateTo({url: '/pages/detail-search/detail-search'})
+    // wx.navigateTo({url: '/pages/detail-search/detail-search'})
   },
   onBannerImageLoad(event) {
     querySelectThrottle(".banner-image").then(res => {
@@ -136,7 +136,7 @@ Page({
     rankingStore.offState("newRanking", this.handleNewRanking)
     rankingStore.offState("originRanking", this.handleOriginRanking)
     rankingStore.offState("upRanking", this.handleUpRanking)
-    
+
     playerStore.offStates(["currentSong", "isPlaying"], this.handlePlayInfos)
   }
 })
